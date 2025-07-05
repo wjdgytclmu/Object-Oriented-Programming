@@ -1,0 +1,60 @@
+@startuml VehicleManagerClassDiagram
+
+class VehicleManager {
+  - fileManager: FileManager
+  - vehicles: List<Vehicle>
+  + VehicleManager()
+  - loadVehicles(): void
+  + saveVehicles(): void
+  + addVehicle(vehicle: Vehicle): boolean
+  + queryById(vehicleTd: String): Vehicle
+  + getAllVehicles(): List<Vehicle>
+  + queryByManufacturer(manufacturer: String): List<Vehicle>
+  + queryByType(vehicleType: String): List<Vehicle>
+  + editVehicle(vehicleId: String, updatedVehicle: Vehicle): boolean
+  - isIdExists(vehicleId: String): boolean
+  + deleteVehicle(vehicleId: String): boolean
+  + statistics(): void
+}
+
+class FileManager {
+  + loadVehicles(): List<Vehicle>
+  + saveVehicle(vehicles: List<Vehicle>): void
+}
+
+class Vehicle {
+  <<abstract>>
+  # vehicleId: String
+  # manufacturer: String
+  # vehicleType: String
+  + getVehicleId(): String
+  + getManufacturer(): String
+  + getVehicleType(): String
+}
+
+class Bus {
+  + Bus()
+}
+
+class Car {
+  + Car()
+}
+
+class Truck {
+  + Truck()
+}
+
+class SystemConfig {
+  <<interface>>
+  {static} MAX_VEHICLES: int
+}
+
+VehicleManager --> FileManager
+VehicleManager --> SystemConfig
+VehicleManager o-- Vehicle : contains >
+
+Vehicle <|-- Bus
+Vehicle <|-- Car
+Vehicle <|-- Truck
+
+@enduml
